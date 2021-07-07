@@ -163,13 +163,7 @@ class Trainee < ApplicationRecord
   end
 
   def sha
-    Digest::SHA1.hexdigest(digest)
-  end
-
-  def digest
-    exclude_list = %w[created_at updated_at dttp_update_sha]
-
-    [as_json.except(*exclude_list), degrees, nationalities, disabilities].map(&:to_json).join(",")
+    Digest::SHA1.hexdigest(value_digest)
   end
 
   def self.ordered_by_drafts_clause
@@ -237,5 +231,23 @@ class Trainee < ApplicationRecord
     if early_years_route?
       self.course_subject_one = Dttp::CodeSets::CourseSubjects::EARLY_YEARS_TEACHING
     end
+  end
+
+private
+
+  def value_digest
+    # this returns a comma separated string of values from this object and it's associations
+    # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
+    # sending updates when we add a field to the schema.
+
+    exclude_list = %w[created_at updated_at dttp_update_sha progress]
+
+    trainee_values = serializable_hash.reject { |k, _v| exclude_list.include?(k) }.values.compact
+
+    (
+      trainee_values + [degrees, nationalities, disabilities].flat_map do |assoc|
+        assoc.map(&:serializable_hash).flat_map(&:values).compact
+      end
+    ).join(",")
   end
 end

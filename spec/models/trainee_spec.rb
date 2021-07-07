@@ -156,22 +156,37 @@ describe Trainee do
     subject { create(:trainee) }
 
     describe "#sha" do
-      let(:expected_sha) { Digest::SHA1.hexdigest(subject.digest) }
-
-      it "returns a SHA of the trainee's current state" do
-        expect(subject.sha).to eq(expected_sha)
-      end
-    end
-
-    describe "#digest" do
-      let(:expected_digest) do
-        subject.as_json.except(
-          "created_at", "updated_at", "dttp_update_sha"
-        ).to_json
+      context "when a field value has changed" do
+        it "returns a different value if the trainee state has changed" do
+          expect { subject.first_names = "Bob" }.to(change { subject.sha })
+        end
       end
 
-      it "returns a string representation of the trainee's current state" do
-        expect(subject.digest).to include(expected_digest)
+      context "when a field is added with no value" do
+        # we don't want the sha to change from a new field being added to the schema
+        # unless it has a value
+
+        before do
+          def subject.serializable_hash(*args)
+            super.merge("new_field" => nil)
+          end
+        end
+
+        it "does not alter the sha" do
+          expect {
+            def subject.serializable_hash(*args)
+              super.merge("new_field" => nil)
+            end
+          }.not_to(change { subject.sha })
+        end
+      end
+
+      context "when the dttp_update_sha is updated" do
+        it "doesn't alter the sha" do
+          expect {
+            subject.update(dttp_update_sha: subject.sha)
+          }.not_to(change { subject.sha })
+        end
       end
     end
 
