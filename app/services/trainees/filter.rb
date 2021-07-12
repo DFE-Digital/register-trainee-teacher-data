@@ -30,12 +30,21 @@ module Trainees
 
       non_award_states = states.dup
 
+      apply_draft_state = false
+
       award_states = []
       states.each do |state|
         award_states << non_award_states.delete(state) if TraineeFilter::AWARD_STATES.include? state
+
+        apply_draft_state = non_award_states.delete(state) if state == "apply_draft"
       end
 
-      trainees.where(state: non_award_states).or(trainees.with_award_states(*award_states))
+      case apply_draft_state
+      when "apply_draft"
+        trainees.where(state: non_award_states).or(trainees.with_award_states(*award_states)).or(trainees.draft_with_apply_application)
+      else
+        trainees.where(state: non_award_states).or(trainees.with_award_states(*award_states))
+      end
     end
 
     def subject(trainees, subject)

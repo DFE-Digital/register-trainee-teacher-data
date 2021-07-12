@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class TraineeFilter
+  APPLY_DRAFT_STATE = %w[apply_draft].freeze
   AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
-  STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES
+  STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES + APPLY_DRAFT_STATE
 
   def initialize(params:)
     @params = params

@@ -614,6 +614,7 @@ en:
           school_direct_tuition_fee: School direct (tuition fee)
         states:
           draft: Draft
+          apply_draft: Apply Draft
           submitted_for_trn: Pending TRN
           trn_received: TRN received
           recommended_for_award: Qualification recommended
