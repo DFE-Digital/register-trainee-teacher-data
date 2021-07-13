@@ -311,6 +311,7 @@ en:
           titles:
             tuition: Lead school
             salaried: Schools
+            pg_teaching_apprenticeship: Schools
   views:
     all_records: All records
     trainees:
