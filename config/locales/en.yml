@@ -243,6 +243,7 @@ en:
         search_button: Search again
     filter:
       training_route: Training route
+      record_source: Record source
       state: Status
       subject: Subject
       text_search: Text search
@@ -602,6 +603,8 @@ en:
   activerecord:
     attributes:
       trainee:
+        record_sources:
+          imported_from_apply: Imported from Apply
         trainee_id: Trainee ID
         training_routes:
           assessment_only: Assessment only

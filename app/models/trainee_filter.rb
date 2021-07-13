@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class TraineeFilter
-  APPLY_DRAFT_STATE = %w[apply_draft].freeze
   AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
-  STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES + APPLY_DRAFT_STATE
+  STATES = Trainee.states.keys.excluding("recommended_for_award", "awarded") + AWARD_STATES
 
   def initialize(params:)
     @params = params
@@ -23,7 +22,7 @@ private
 
   def merged_filters
     @merged_filters ||= text_search.merge(
-      **training_route, **state, **subject, **text_search,
+      **training_route, **state, **subject, **text_search, **record_source,
     ).with_indifferent_access
   end
 
@@ -31,6 +30,16 @@ private
     return {} unless training_route_options.any?
 
     { "training_route" => training_route_options }
+  end
+
+  def record_source
+    return {} unless record_source_options.any?
+
+    { "record_source" => record_source_options }
+  end
+
+  def record_source_options
+    params[:record_source] ? ["imported_from_apply"] : []
   end
 
   def training_route_options

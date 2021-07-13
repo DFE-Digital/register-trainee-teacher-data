@@ -22,7 +22,7 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
-  scenario "can filter by apply_drafts" do
+  scenario "can filter by apply_drafts", feature_imported_from_apply_filter: true do
     when_i_filter_by_apply_draft_status
     then_only_the_apply_draft_trainee_is_visible
   end
@@ -126,7 +126,7 @@ private
   end
 
   def when_i_filter_by_apply_draft_status
-    trainee_index_page.apply_draft_checkbox.click
+    trainee_index_page.imported_from_apply_checkbox.click
     trainee_index_page.apply_filters.click
   end
 

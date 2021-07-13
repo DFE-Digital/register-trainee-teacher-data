@@ -139,7 +139,7 @@ class Trainee < ApplicationRecord
     )
   }
 
-  scope :draft_with_apply_application, -> { where("apply_application_id is not null and state=0") }
+  scope :with_apply_application, -> { where("apply_application_id is not null") }
 
   audited associated_with: :provider
   has_associated_audits

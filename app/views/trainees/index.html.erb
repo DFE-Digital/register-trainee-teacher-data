@@ -78,6 +78,26 @@
     <% end %>
   <% end %>
 
+  <% if FeatureService.enabled?(:imported_from_apply_filter) && @trainees_imported_from_apply.present? %>
+    <% component.filter_option do %>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+            Record source
+          </legend>
+          <div class="govuk-checkboxes govuk-checkboxes--small">
+            
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag "record_source[]", "imported_from_apply", checked?(@filters, :record_source, "imported_from_apply"), id: "record_source-imported_from_apply", class: "govuk-checkboxes__input" %>
+                <%= label_tag "record_source-imported_from_apply", label_for("record_source", "imported_from_apply"), class: "govuk-label govuk-checkboxes__label" %>
+              </div>
+            
+          </div>
+        </fieldset>
+      </div>
+    <% end %>
+  <% end %>
+
   <% component.filter_option do %>
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
@@ -86,7 +106,6 @@
         </legend>
         <div class="govuk-checkboxes govuk-checkboxes--small">
           <% TraineeFilter::STATES.each do |state, _| %>
-            <% next if state == "apply_draft" && @apply_draft_trainees.blank? %>
             <div class="govuk-checkboxes__item">
               <%= check_box_tag "state[]", state, checked?(@filters, :state, state), id: "state-#{state}", class: "govuk-checkboxes__input" %>
               <%= label_tag "state-#{state}", label_for("state", state), class: "govuk-label govuk-checkboxes__label" %>
