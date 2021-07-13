@@ -15,6 +15,7 @@ class TraineesController < ApplicationController
     # clause, removing Kaminari's pagination. Hence the use of `#select`.
     @draft_trainees = paginated_trainees.select(&:draft?)
     @completed_trainees = paginated_trainees.reject(&:draft?)
+    @apply_draft_trainees = policy_scope(Trainee).draft_with_apply_application
     @training_routes = policy_scope(Trainee).group(:training_route).count.keys
 
     respond_to do |format|

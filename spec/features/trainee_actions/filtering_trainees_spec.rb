@@ -22,6 +22,11 @@ RSpec.feature "Filtering trainees" do
     then_all_trainees_are_visible
   end
 
+  scenario "can filter by apply_drafts" do
+    when_i_filter_by_apply_draft_status
+    then_only_the_apply_draft_trainee_is_visible
+  end
+
   scenario "can filter by status" do
     when_i_filter_by_draft_status
     then_only_the_draft_trainee_is_visible
@@ -97,6 +102,7 @@ private
     @searchable_trainee ||= create(:trainee, trn: "123")
     @draft_trainee ||= create(:trainee, :draft)
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
+    @apply_draft_trainee ||= create(:trainee, :with_apply_application)
     Trainee.update_all(provider_id: @current_user.provider.id)
   end
 
@@ -116,6 +122,11 @@ private
 
   def when_i_filter_by_draft_status
     trainee_index_page.draft_checkbox.click
+    trainee_index_page.apply_filters.click
+  end
+
+  def when_i_filter_by_apply_draft_status
+    trainee_index_page.apply_draft_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
@@ -180,6 +191,11 @@ private
     ].each do |trainee|
       expect(trainee_index_page).not_to have_text(full_name(trainee))
     end
+  end
+
+  def then_only_the_apply_draft_trainee_is_visible
+    expect(trainee_index_page).to have_text(full_name(@apply_draft_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@draft_trainee))
   end
 
   def then_only_the_draft_trainee_is_visible

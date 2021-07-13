@@ -22,6 +22,7 @@ module PageObjects
       element :text_search, "#text_search"
       element :assessment_only_checkbox, "#training_route-assessment_only"
       element :draft_checkbox, "#state-draft"
+      element :apply_draft_checkbox, "#state-apply_draft"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
 
