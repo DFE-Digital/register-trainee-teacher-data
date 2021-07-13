@@ -52,6 +52,7 @@ features:
     provider_led_undergrad: false
     opt_in_undergrad: false
     hpitt_postgrad: false
+    pg_teaching_apprenticeship: false
 
 dfe_sign_in:
   # Our service name
