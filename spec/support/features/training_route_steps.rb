@@ -26,6 +26,10 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:early_years_postgrad])
     end
 
+    def given_i_have_created_a_pg_teaching_apprenticeship_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship])
+    end
+
   private
 
     def choose_training_route_for(route)
