@@ -5,6 +5,7 @@ features:
   publish_course_details: true
   show_funding: true
   persist_to_dttp: false
+  imported_from_apply_filter: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true

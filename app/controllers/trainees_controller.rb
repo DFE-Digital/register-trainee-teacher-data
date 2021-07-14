@@ -16,7 +16,7 @@ class TraineesController < ApplicationController
     @draft_trainees = paginated_trainees.select(&:draft?)
     @completed_trainees = paginated_trainees.reject(&:draft?)
     @training_routes = policy_scope(Trainee).group(:training_route).count.keys
-    @trainees_imported_from_apply = policy_scope(Trainee).with_apply_application
+    @trainees_imported_from_apply_count = policy_scope(Trainee).with_apply_application.count
 
     respond_to do |format|
       format.html
