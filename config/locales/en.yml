@@ -294,14 +294,17 @@ en:
         training_details: Training details
         placement_details: Placement details
         lead_school: School details
+        trainee_data: Trainee data
         schools: Schools
         funding: Funding
       statuses:
         not_started: not started
         in_progress: not marked as complete
+        review: not reviewed
       link_texts:
         not_started: Start section
         in_progress: Continue section
+        review: Review their data
     school_result_notice:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."

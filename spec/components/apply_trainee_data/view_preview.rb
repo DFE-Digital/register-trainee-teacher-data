@@ -55,7 +55,7 @@ module ApplyTraineeData
     end
 
     def form
-      ApplyTraineeDataForm.new(trainee: trainee)
+      ApplyTraineeDataForm.new(trainee)
     end
   end
 end

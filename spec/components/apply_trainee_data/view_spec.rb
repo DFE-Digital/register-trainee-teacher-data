@@ -7,7 +7,7 @@ module ApplyTraineeData
     alias_method :component, :page
 
     before do
-      form = ApplyTraineeDataForm.new(trainee: trainee)
+      form = ApplyTraineeDataForm.new(trainee)
       render_inline(View.new(trainee, form))
     end
 

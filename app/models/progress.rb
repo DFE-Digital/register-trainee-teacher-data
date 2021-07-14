@@ -17,6 +17,7 @@ class Progress
   attribute :course_details, :boolean, default: false
   attribute :training_details, :boolean, default: false
   attribute :placement_details, :boolean, default: false
+  attribute :trainee_data, :boolean, default: false
   attribute :schools, :boolean, default: false
   attribute :funding, :boolean, default: false
 end
