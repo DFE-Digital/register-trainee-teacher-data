@@ -2,6 +2,7 @@
 
 class ApplyApplication < ApplicationRecord
   belongs_to :provider
+  has_one :trainee
 
   validates :application, presence: true
 end

@@ -5,6 +5,7 @@ require "rails_helper"
 describe ApplyApplication do
   describe "associations" do
     it { is_expected.to belong_to(:provider) }
+    it { is_expected.to have_one(:trainee) }
   end
 
   describe "validations" do
