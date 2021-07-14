@@ -410,6 +410,7 @@ en:
           provider_led_postgrad: provider-led postgrad
           school_direct_salaried: school direct salaried
           school_direct_tuition_fee: school direct tuition fee
+          pg_teaching_apprenticeship: teaching apprenticeship postgrad
       funding:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
