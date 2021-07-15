@@ -1,6 +1,7 @@
 @import "./govuk_style_setup";
 @import "~govuk-frontend/govuk/all";
 @import "~@ministryofjustice/frontend/moj/all";
+@import "./govuk_overrides";
 @import "./filter_toggle_button";
 
 .govuk-cookie-banner__hide {
