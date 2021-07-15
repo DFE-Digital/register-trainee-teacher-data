@@ -32,7 +32,7 @@ module Sections
     end
 
     def collapsed_funding_inactive_section_args
-      { title: I18n.t("components.sections.titles.funding_inactive"), link_text: I18n.t("components.sections.link_texts.funding_inactive"), url: nil, error: error }
+      { title: I18n.t("components.sections.titles.funding_inactive"), hint_text: I18n.t("components.sections.link_texts.funding_inactive"), error: error }
     end
 
     def collapsed_section_args
