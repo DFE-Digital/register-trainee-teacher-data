@@ -12,6 +12,7 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   show_funding: true
+  imported_from_apply_filter: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true

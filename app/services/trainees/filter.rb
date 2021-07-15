@@ -19,6 +19,12 @@ module Trainees
 
     attr_reader :trainees, :filters
 
+    def record_source(trainees, record_source)
+      return trainees if record_source.blank?
+
+      trainees.with_apply_application
+    end
+
     def training_route(trainees, training_route)
       return trainees if training_route.blank?
 
@@ -58,6 +64,7 @@ module Trainees
       filtered_trainees = state(filtered_trainees, filters[:state])
       filtered_trainees = subject(filtered_trainees, filters[:subject])
       filtered_trainees = text_search(filtered_trainees, filters[:text_search])
+      filtered_trainees = record_source(filtered_trainees, filters[:record_source])
       filtered_trainees
     end
   end
