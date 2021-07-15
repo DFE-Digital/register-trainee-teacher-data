@@ -9,6 +9,7 @@ module Trainees
     end
 
     def call
+      validate_and_sanitise_trainee
       trainee.save!
       trainee
     end
@@ -16,14 +17,6 @@ module Trainees
   private
 
     attr_reader :application
-
-    def attributes
-      @attributes ||= parsed_application["attributes"]
-    end
-
-    def parsed_application
-      @parsed_application ||= JSON.parse(application.application)
-    end
 
     def trainee
       @trainee ||= Trainee.new(mapped_attributes)
@@ -54,7 +47,7 @@ module Trainees
     end
 
     def degrees
-      raw_degrees.map { |degree| ::Degrees::CreateFromApply.call(attributes: degree) }
+      application.degrees.map { |degree| Degree.new(degree) }
     end
 
     def address
@@ -121,19 +114,24 @@ module Trainees
     end
 
     def raw_trainee
-      @raw_trainee ||= attributes["candidate"]
+      @raw_trainee ||= application.application_attributes["candidate"]
     end
 
     def raw_contact_details
-      @raw_contact_details ||= attributes["contact_details"]
+      @raw_contact_details ||= application.application_attributes["contact_details"]
     end
 
     def raw_course
-      @raw_course ||= attributes["course"]
+      @raw_course ||= application.application_attributes["course"]
     end
 
-    def raw_degrees
-      @raw_degrees ||= attributes["qualifications"]["degrees"]
+    def validate_and_sanitise_trainee
+      trainee.valid?
+      trainee.degrees.each do |degree|
+        degree.errors.each do |error|
+          degree.send("#{error.attribute}=", nil)
+        end
+      end
     end
   end
 end

@@ -66,6 +66,12 @@ module Trainees
       }.to change(Trainee.draft, :count).by(1)
     end
 
+    it "creates a degree" do
+      expect {
+        create_trainee_from_apply
+      }.to change(Degree, :count).by(1)
+    end
+
     it { is_expected.to have_attributes(trainee_attributes) }
 
     it "associates the created trainee against the apply_application and provider" do
