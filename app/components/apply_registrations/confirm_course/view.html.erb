@@ -1,0 +1,22 @@
+<h1 class="govuk-heading-l"><%= heading %></h1>
+
+<section class="app-summary-card govuk-!-margin-bottom-6">
+  <header class="app-summary-card__header">
+    <h2 class="app-summary-card__title">
+      <%= summary_title %>
+    </h2>
+  </header>
+  <div class="app-summary-card__body">
+    <%= render GovukComponent::SummaryList.new do |component| %>
+      <% rows.each do |row| %>
+        <% component.slot(
+          :row,
+          key: row[:key],
+          value: row[:value],
+          action: row[:action],
+          classes: row[:key].to_s.downcase.gsub(/ /, "-"),
+        ) %>
+      <% end %>
+    <% end %>
+  </div>
+</section>

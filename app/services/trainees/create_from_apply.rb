@@ -42,7 +42,6 @@ module Trainees
         diversity_disclosure: diversity_disclosure,
         email: raw_contact_details["email"],
         training_route: course&.route,
-        course_subject_one: course&.name,
         course_code: course&.code,
         course_age_range: course&.age_range,
         course_start_date: course&.start_date,
@@ -50,7 +49,7 @@ module Trainees
         degrees: degrees,
         disabilities: disabilities,
         nationalities: nationalities,
-      }.merge(address)
+      }.merge(address).merge(course_subjects_attributes)
     end
 
     def degrees
@@ -59,6 +58,16 @@ module Trainees
 
     def address
       raw_contact_details["country"] == "GB" ? uk_address : international_address
+    end
+
+    def course_subjects_attributes
+      return {} if subject_specialisms[:course_subject_one].size > 1
+
+      {
+        course_subject_one: subject_specialisms[:course_subject_one].first,
+        course_subject_two: subject_specialisms[:course_subject_two].first,
+        course_subject_three: subject_specialisms[:course_subject_three].first,
+      }
     end
 
     def international_address
@@ -134,6 +143,10 @@ module Trainees
 
     def raw_degrees
       @raw_degrees ||= attributes["qualifications"]["degrees"]
+    end
+
+    def subject_specialisms
+      @subject_specialisms ||= CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
     end
   end
 end

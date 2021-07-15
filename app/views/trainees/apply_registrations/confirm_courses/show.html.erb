@@ -1,0 +1,26 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.confirm_course.edit") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLink.new(text: t(:back), href: trainee_apply_registrations_course_details_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render ApplyRegistrations::ConfirmCourse::View.new(trainee: @trainee, course: @course, specialisms: @specialisms) %>
+
+    <%= register_form_with(model: @confirm_course_form,
+                           url: trainee_apply_registrations_confirm_courses_path(@trainee),
+                           method: :put,
+                           local: true) do |f| %>
+      <%= f.hidden_field :code, value: @trainee.course_code %>
+
+      <%= f.govuk_check_boxes_fieldset :mark_as_reviewed, multiple: false, legend: { text: "" } do %>
+        <%= f.govuk_check_box :mark_as_reviewed, 1, 0, multiple: false, link_errors: true, label: { text: t(".mark_as_reviewed") } %>
+      <% end %>
+
+      <%= f.govuk_submit t(:continue) %>
+    <% end %>
+  </div>
+</div>
+
+<%= render(CancelLink::View.new(@trainee)) %>

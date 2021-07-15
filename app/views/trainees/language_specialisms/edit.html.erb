@@ -12,7 +12,6 @@
       <%= f.govuk_error_summary %>
 
       <div class="govuk-form-group">
-
         <%= f.govuk_check_boxes_fieldset :language_specialisms,
                                           legend: { text: t(".heading"), tag: "h1", size: "l" },
                                           classes: "language-specialisms" do %>
@@ -24,7 +23,7 @@
             <p class="govuk-body govuk-hint">
               <%= t(".additional_hint") %>
             </p>
-          <div>
+          </div>
 
           <% sort_languages(@language_specialisms).each_with_index do |language, index| %>
             <%= f.govuk_check_box(

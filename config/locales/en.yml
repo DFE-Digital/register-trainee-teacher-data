@@ -510,11 +510,6 @@ en:
       heading: Sorry, something went wrong
       body: Try again later.
       support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
-  apply_trainee_data:
-    view:
-      heading_1_name: "Draft record for %{name}"
-      heading_1_no_name: "Draft record"
-      heading_2: "Trainee Data"
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."
@@ -542,6 +537,29 @@ en:
 
 
         If the details are wrong for this trainee only, you can edit them here.
+  apply_registrations:
+    trainee_data:
+      view:
+        heading_1_name: "Draft record for %{name}"
+        heading_1_no_name: "Draft record"
+        heading_2: "Trainee Data"
+    confirm_course:
+      view:
+        change: Change
+        change_course: Change course
+        heading: Confirm trainee’s course details
+        summary_title: Course details
+        route: Route
+        type_of_course: Subject
+        subject: Subject
+        multiple_subjects: Subjects
+        level: Level
+        age_range: Age range
+        start_date: Start date
+        course_start_date: Course start date
+        course_end_date: Course end date
+        duration: Duration
+        course_details: Course details
   course_details:
     view:
       subject:
@@ -605,7 +623,11 @@ en:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
         hint: This specialism is what is recorded on the trainee’s QTS award.
-
+    apply_registrations:
+      confirm_courses:
+        show:
+          confirm_course: Confirm course
+          mark_as_reviewed: I have reviewed this section
   activerecord:
     attributes:
       trainee:

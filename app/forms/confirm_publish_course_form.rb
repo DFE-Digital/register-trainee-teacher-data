@@ -37,8 +37,6 @@ private
     specialism1, specialism2, specialism3 = *@specialisms
     trainee.progress.course_details = true
     trainee.assign_attributes({
-      # Taking the first specialism for each subject until we have built
-      # the capability for the user to choose from multiple options.
       course_subject_one: specialism1,
       course_subject_two: specialism2,
       course_subject_three: specialism3,
@@ -51,9 +49,5 @@ private
 
   def course
     @course ||= Course.find_by(code: code)
-  end
-
-  def subject_specialisms
-    @subject_specialisms ||= CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
   end
 end

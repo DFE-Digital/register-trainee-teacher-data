@@ -1,0 +1,23 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <%= render SummaryCard::View.new(trainee: @trainee, title: "Course details", heading_level: 2,
+                                   rows: [
+                                     {
+                                       key: "Course name",
+                                       value: "#{@course.name} (#{@course.code})".strip,
+                                       action: govuk_link_to('Change<span class="govuk-visually-hidden"> course</span>'.html_safe,
+                                                             edit_trainee_publish_course_details_path(@trainee, context: :apply)),
+                                     },
+                                     {
+                                       key: "Route",
+                                       value: t("activerecord.attributes.trainee.training_routes.#{@course.route}"),
+                                     },
+                                   ]) %>
+
+  <%= render GovukButtonLinkTo::View.new(body: "Select the trainee’s specialisms", url: subject_specialism_path) %>
+</div>
+
+<%= render(CancelLink::View.new(@trainee)) %>

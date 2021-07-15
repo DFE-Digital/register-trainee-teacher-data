@@ -104,7 +104,11 @@ Rails.application.routes.draw do
       resources :employing_schools, only: %i[index], path: "/employing-schools"
       resource :employing_schools, only: %i[update edit], path: "/employing-schools"
 
-      resource :apply_trainee_data, only: %i[update edit], path: "/apply-trainee-data"
+      namespace :apply_registrations, path: "/apply-registrations" do
+        resource :trainee_data, only: %i[update edit], path: "/trainee-data"
+        resource :course_details, only: :show, path: "/course-details"
+        resource :confirm_courses, only: %i[show update], path: "/confirm-course"
+      end
 
       resource :timeline, only: :show
 

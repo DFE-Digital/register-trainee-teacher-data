@@ -1,10 +1,13 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.course_details.edit", has_errors: @publish_course_details.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.course_details.edit", has_errors: @publish_course_details_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<%= register_form_with(model: @publish_course_details, url: trainee_publish_course_details_path(@trainee), method: :put, local: true) do |f| %>
+<%= register_form_with(model: @publish_course_details_form,
+                       url: trainee_publish_course_details_path(@trainee),
+                       method: :put,
+                       local: true) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-form-group">
@@ -12,6 +15,7 @@
                                        legend: { text: t(".heading"), tag: "h1", size: "l" },
                                        hint: { text: t("views.forms.publish_course_details.route_message", route: route_title(@trainee.training_route)) },
                                        classes: "published-courses" do %>
+      <%= f.hidden_field :context, value: params[:context] %>
 
       <% @courses.each do |course| %>
         <%= f.govuk_radio_button :code, course.code,

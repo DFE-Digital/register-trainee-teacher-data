@@ -134,6 +134,10 @@ module Features
       @course_details_page ||= PageObjects::Trainees::CourseDetails.new
     end
 
+    def apply_registrations_course_details_page
+      @apply_registrations_course_details_page ||= PageObjects::Trainees::ApplyRegistrations::CourseDetails.new
+    end
+
     def publish_course_details_page
       @publish_course_details_page ||= PageObjects::Trainees::PublishCourseDetails.new
     end

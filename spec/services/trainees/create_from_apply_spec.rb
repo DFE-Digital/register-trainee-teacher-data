@@ -10,13 +10,16 @@ module Trainees
     let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
     let(:non_uk_contact_details) { ApiStubs::ApplyApi.non_uk_contact_details.as_json }
     let(:course_info) { ApiStubs::ApplyApi.course.as_json }
+    let(:trainee) { create_trainee_from_apply }
+    let(:subject_names) { [] }
 
     let!(:course) do
       create(
-        :course,
+        :course_with_subjects,
         code: course_info["course_code"],
         accredited_body_code: apply_application.provider.code,
         route: :school_direct_tuition_fee,
+        subject_names: subject_names,
       )
     end
 
@@ -32,7 +35,6 @@ module Trainees
         diversity_disclosure: Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed],
         email: contact_details["email"],
         training_route: course.route,
-        course_subject_one: course.name,
         course_code: course.code,
         course_min_age: course.min_age,
         course_max_age: course.max_age,
@@ -69,7 +71,6 @@ module Trainees
     it { is_expected.to have_attributes(trainee_attributes) }
 
     it "associates the created trainee against the apply_application and provider" do
-      trainee = create_trainee_from_apply
       expect(trainee.apply_application).to eq(apply_application)
       expect(trainee.provider).to eq(apply_application.provider)
     end
@@ -90,7 +91,6 @@ module Trainees
       end
 
       it "adds the trianee's disabilities" do
-        trainee = create_trainee_from_apply
         expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
       end
     end
@@ -100,9 +100,29 @@ module Trainees
         Nationality.create!(Dttp::CodeSets::Nationalities::MAPPING.keys.map { |key| { name: key } })
       end
 
-      it "adds the trianee's nationalities" do
-        trainee = create_trainee_from_apply
+      it "adds the trainee's nationalities" do
         expect(trainee.nationalities.map(&:name)).to match_array(%w[british tristanian])
+      end
+    end
+
+    context "course subject has multiple specialisms" do
+      let(:subject_names) do
+        [PUBLISH_SUBJECT_SPECIALISM_MAPPING.select { |_, specialisms| specialisms.size > 1 }.keys.sample]
+      end
+
+      it "doesn't set any of the course subject one attribute" do
+        expect(trainee.course_subject_one).to be_nil
+      end
+    end
+
+    context "course subject has one specialism" do
+      let(:subject_names) { [subject_name] }
+      let(:subject_name) do
+        PUBLISH_SUBJECT_SPECIALISM_MAPPING.select { |_, specialisms| specialisms.size == 1 }.keys.sample
+      end
+
+      it "doesn't set any of the course subject one attribute" do
+        expect(trainee.course_subject_one).to eq(PUBLISH_SUBJECT_SPECIALISM_MAPPING[subject_name].first)
       end
     end
   end
