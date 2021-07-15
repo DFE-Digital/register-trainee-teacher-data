@@ -34,7 +34,7 @@ describe DegreesHelper do
 
   describe "#institutions_options" do
     before do
-      allow(self).to receive(:institutions).and_return(%w[institution])
+      stub_const("Degree::INSTITUTIONS", %w[institution])
     end
 
     it "iterates over array and prints out correct institutions values" do
@@ -47,7 +47,7 @@ describe DegreesHelper do
 
   describe "#subjects_options" do
     before do
-      allow(self).to receive(:subjects).and_return(%w[subject])
+      stub_const("Degree::SUBJECTS", %w[subject])
     end
 
     it "iterates over array and prints out correct subjects values" do
