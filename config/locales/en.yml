@@ -296,7 +296,7 @@ en:
         lead_school: School details
         schools: Schools
         funding: Funding
-        funding_inactive: Funding section cannot be started yet
+        funding_inactive: Funding cannot be started yet
       statuses:
         not_started: not started
         in_progress: not marked as complete
