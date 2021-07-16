@@ -330,11 +330,11 @@ describe Trainee do
     end
   end
 
-  describe "#with_subject" do
+  describe "#with_subject_or_allocation_subject" do
     let!(:trainee_with_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::BIOLOGY) }
     let!(:trainee_without_subject) { create(:trainee, course_subject_one: Dttp::CodeSets::CourseSubjects::MATHEMATICS) }
 
-    subject { described_class.with_subject(Dttp::CodeSets::CourseSubjects::BIOLOGY) }
+    subject { described_class.with_subject_or_allocation_subject(Dttp::CodeSets::CourseSubjects::BIOLOGY) }
 
     it { is_expected.to eq([trainee_with_subject]) }
 
@@ -359,6 +359,15 @@ describe Trainee do
       end
 
       it { is_expected.to match_array([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
+    end
+
+    context "with allocation subject" do
+      let(:subject_specialism) { create(:subject_specialism) }
+      let!(:trainee_with_subject) { create(:trainee, course_subject_one: subject_specialism.name) }
+
+      subject { described_class.with_subject_or_allocation_subject(subject_specialism.allocation_subject.name) }
+
+      it { is_expected.to eq([trainee_with_subject]) }
     end
   end
 
