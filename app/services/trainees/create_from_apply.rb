@@ -9,7 +9,8 @@ module Trainees
     end
 
     def call
-      trainee.save!
+      validate_and_capture_invalid_info
+      trainee.save! && application.save!
       trainee
     end
 
@@ -134,6 +135,20 @@ module Trainees
 
     def raw_degrees
       @raw_degrees ||= attributes["qualifications"]["degrees"]
+    end
+
+    def validate_and_capture_invalid_info
+      trainee.valid?
+      errors = { degrees: [] }
+
+      trainee.degrees.each_with_index do |degree, index|
+        degree.errors.each do |error|
+          errors[:degrees][index] = { error.attribute.to_sym => degree.send(error.attribute) }
+          degree.send("#{error.attribute}=", nil)
+        end
+      end
+
+      application.invalid_data = errors
     end
   end
 end

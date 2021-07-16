@@ -19,11 +19,11 @@ module DegreesHelper
   end
 
   def institutions_options
-    to_options(institutions)
+    to_options(Degree::INSTITUTIONS)
   end
 
   def subjects_options
-    to_options(subjects)
+    to_options(Degree::SUBJECTS)
   end
 
   def countries_options
@@ -35,14 +35,6 @@ module DegreesHelper
   end
 
 private
-
-  def institutions
-    Dttp::CodeSets::Institutions::MAPPING.keys
-  end
-
-  def subjects
-    Dttp::CodeSets::DegreeSubjects::MAPPING.keys
-  end
 
   def countries
     Dttp::CodeSets::Countries::MAPPING.keys
