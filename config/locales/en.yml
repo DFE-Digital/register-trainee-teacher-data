@@ -298,9 +298,11 @@ en:
         schools: Schools
         funding: Funding
       statuses:
+        not_provided: not provided
         not_started: not started
         in_progress: not marked as complete
       link_texts:
+        not_provided: Add degree details
         not_started: Start section
         in_progress: Continue section
     school_result_notice:

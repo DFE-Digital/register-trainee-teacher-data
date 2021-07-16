@@ -31,12 +31,14 @@ class ApplyTraineeDataForm
   end
 
   def progress_status(progress_key)
+    return :not_provided if trainee.apply_application? && !progress_service(progress_key).started?
+
     progress_service(progress_key).status.parameterize(separator: "_").to_sym
   end
 
   def display_type(section_key)
     if section_key == :degrees
-      progress_status(section_key) == :not_started ? :collapsed : :expanded
+      progress_status(section_key) == :not_provided ? :collapsed : :expanded
     else
       :expanded
     end

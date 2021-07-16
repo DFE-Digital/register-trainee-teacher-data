@@ -20,11 +20,12 @@ module ApplyTraineeData
       end
     end
 
-    context "trainee without degrees" do
-      let(:trainee) { create(:trainee, nationalities: [build(:nationality)], degrees: []) }
+    context "draft apply trainee without degrees" do
+      let(:apply_application) { create(:apply_application) }
+      let(:trainee) { create(:trainee, nationalities: [build(:nationality)], degrees: [], apply_application: apply_application) }
 
       it "has a collapsed degrees section" do
-        expect(component).to have_text("Degree details not started")
+        expect(component).to have_text("Degree details not provided")
       end
     end
   end

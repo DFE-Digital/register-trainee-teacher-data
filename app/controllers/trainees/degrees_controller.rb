@@ -13,7 +13,7 @@ module Trainees
       @degree_form = @degrees_form.build_degree(degree_params, autocomplete_params)
 
       if @degree_form.save_or_stash
-        redirect_to trainee_degrees_confirm_path(trainee)
+        trainee.apply_application? ? (redirect_to edit_trainee_apply_trainee_data_path(trainee)) : (redirect_to trainee_degrees_confirm_path(trainee))
       else
         render :new
       end

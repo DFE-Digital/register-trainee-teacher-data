@@ -65,6 +65,7 @@ module Sections
           in_progress: "trainee_diversity_confirm_path",
         },
         degrees: {
+          not_provided: "trainee_degrees_new_type_path",
           not_started: "trainee_degrees_new_type_path",
           in_progress: "trainee_degrees_confirm_path",
         },
