@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Degrees
-  class CreateFromApply
+  class MapFromApply
     include ServicePattern
 
     def initialize(attributes:)
@@ -9,20 +9,12 @@ module Degrees
     end
 
     def call
-      degree
+      common_params.merge(degree_params)
     end
 
   private
 
     attr_reader :attributes
-
-    def degree
-      Degree.new(params)
-    end
-
-    def params
-      @params ||= common_params.merge(degree_params)
-    end
 
     def degree_params
       uk_degree? ? uk_degree_params : non_uk_degree_params

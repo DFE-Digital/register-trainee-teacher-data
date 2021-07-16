@@ -3,6 +3,9 @@
 class Degree < ApplicationRecord
   include Sluggable
 
+  INSTITUTIONS = Dttp::CodeSets::Institutions::MAPPING.keys
+  SUBJECTS = Dttp::CodeSets::DegreeSubjects::MAPPING.keys
+
   validates :locale_code, presence: true
   validates :institution, presence: true, on: :uk
   validates :country, presence: true, on: :non_uk
@@ -12,6 +15,8 @@ class Degree < ApplicationRecord
   validates :grade, presence: true, on: :uk
   validates :graduation_year, presence: true, on: %i[uk non_uk]
   validate :graduation_year_valid, if: -> { graduation_year.present? }
+  validates :institution, inclusion: { in: INSTITUTIONS }, allow_nil: true
+  validates :subject, inclusion: { in: SUBJECTS }, allow_nil: true
 
   belongs_to :trainee
 
