@@ -18,7 +18,8 @@ module Funding
     end
 
     context "assessment only route" do
-      let(:trainee) { build(:trainee, training_initiative: training_initiative) }
+      let(:state) { :draft }
+      let(:trainee) { build(:trainee, state, training_initiative: training_initiative) }
 
       describe "on training initiative" do
         let(:training_initiative) { ROUTE_INITIATIVES.keys.first }
@@ -40,8 +41,16 @@ module Funding
             render_inline(View.new(data_model: trainee))
           end
 
-          it "doesnt not render" do
+          it "doesnt not render bursary row" do
             expect(rendered_component).not_to have_text("Bursary applied for")
+          end
+
+          context "and it non-draft" do
+            let(:state) { :trn_received }
+
+            it "renders bursary not available" do
+              expect(rendered_component).to have_text("No bursaries available for this course")
+            end
           end
         end
 

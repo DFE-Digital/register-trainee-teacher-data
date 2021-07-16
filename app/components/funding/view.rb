@@ -32,7 +32,7 @@ module Funding
         rows << {
           key: t(".bursary_funding"),
           value: bursary_funding,
-          action: action_link("bursary funding", edit_trainee_funding_bursary_path(trainee)),
+          action: (action_link("bursary funding", edit_trainee_funding_bursary_path(trainee)) if trainee.can_apply_for_bursary?),
         }
       end
 
@@ -46,7 +46,7 @@ module Funding
     end
 
     def show_bursary_funding?
-      trainee.can_apply_for_bursary?
+      !trainee.draft? || trainee.can_apply_for_bursary?
     end
 
     def bursary_amount
@@ -66,7 +66,9 @@ module Funding
     end
 
     def bursary_funding
-      return t("components.confirmation.not_provided") if trainee.applying_for_bursary.nil?
+      if trainee.applying_for_bursary.nil?
+        return trainee.draft? ? t("components.confirmation.not_provided") : t(".no_bursary_available")
+      end
 
       return "#{t(".tiered_bursary_applied_for.#{trainee.bursary_tier}")}#{bursary_funding_hint}".html_safe if trainee.bursary_tier.present?
 
