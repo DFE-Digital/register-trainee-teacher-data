@@ -15,8 +15,6 @@
                                        legend: { text: t(".heading"), tag: "h1", size: "l" },
                                        hint: { text: t("views.forms.publish_course_details.route_message", route: route_title(@trainee.training_route)) },
                                        classes: "published-courses" do %>
-      <%= f.hidden_field :context, value: params[:context] %>
-
       <% @courses.each do |course| %>
         <%= f.govuk_radio_button :code, course.code,
           label: { text: "#{course.name} (#{course.code})" },

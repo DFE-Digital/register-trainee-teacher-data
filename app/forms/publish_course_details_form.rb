@@ -5,7 +5,6 @@ class PublishCourseDetailsForm < TraineeForm
 
   FIELDS = %i[
     code
-    context
     specialism_form
   ].freeze
 
@@ -20,10 +19,6 @@ class PublishCourseDetailsForm < TraineeForm
   def specialism_form=(form)
     @specialism_form = form
     @fields.merge!(specialism_form: form)
-  end
-
-  def for_apply_registration?
-    context == "apply"
   end
 
 private

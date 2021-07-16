@@ -17,7 +17,7 @@ module ApplyRegistrations
     def initialize(trainee, specialisms, params = {})
       @trainee = trainee
       @specialisms = specialisms
-      assign_attributes({mark_as_reviewed: trainee.progress.course_details}.merge(params))
+      assign_attributes({ mark_as_reviewed: trainee.progress.course_details }.merge(params))
     end
 
     def save
@@ -32,16 +32,17 @@ module ApplyRegistrations
 
     def update_trainee_attributes
       course_subject_one, course_subject_two, course_subject_three = *specialisms
-      trainee.progress.course_details = mark_as_reviewed
       trainee.assign_attributes({
-        course_subject_one: course_subject_one,
-        course_subject_two: course_subject_two,
-        course_subject_three: course_subject_three,
+        training_route: course&.route,
         course_code: course.code,
         course_age_range: course.age_range,
         course_start_date: course.start_date,
         course_end_date: course.end_date,
+        course_subject_one: course_subject_one,
+        course_subject_two: course_subject_two,
+        course_subject_three: course_subject_three,
       })
+      trainee.progress.course_details = mark_as_reviewed
     end
 
     def course
@@ -49,4 +50,3 @@ module ApplyRegistrations
     end
   end
 end
-

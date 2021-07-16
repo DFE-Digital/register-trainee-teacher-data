@@ -78,7 +78,7 @@ module Trainees
     end
 
     def course_params
-      params.fetch(:publish_course_details_form, {}).permit(:code, :context)
+      params.fetch(:publish_course_details_form, {}).permit(:code)
     end
 
     def trainee
@@ -90,7 +90,7 @@ module Trainees
     end
 
     def course_confirmation_path
-      if @publish_course_details_form.for_apply_registration?
+      if trainee.apply_application?
         trainee_apply_registrations_confirm_courses_path(trainee)
       else
         edit_trainee_confirm_publish_course_path(@trainee)

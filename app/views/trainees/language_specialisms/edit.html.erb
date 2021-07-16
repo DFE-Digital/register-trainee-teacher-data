@@ -17,12 +17,8 @@
                                           classes: "language-specialisms" do %>
 
           <div class="govuk-hint" id="language-language-specialisms-form-language-specialisms-hint">
-            <p class="govuk-body govuk-hint">
-              <%= t(".hint") %>
-            </p>
-            <p class="govuk-body govuk-hint">
-              <%= t(".additional_hint") %>
-            </p>
+            <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
+            <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
           </div>
 
           <% sort_languages(@language_specialisms).each_with_index do |language, index| %>

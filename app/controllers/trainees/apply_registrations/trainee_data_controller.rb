@@ -7,16 +7,15 @@ module Trainees
 
       def edit
         page_tracker.save_as_origin!
-        @form = ApplyRegistrations::TraineeDataForm.new(trainee: @trainee)
+        @trainee_data_form = ::ApplyRegistrations::TraineeDataForm.new(trainee: @trainee)
       end
 
       def update
-        if params[:apply_trainee_data_form][:mark_as_reviewed] == "1"
-          @form = ApplyRegistrations::TraineeDataForm.new(trainee: @trainee)
-          unless @form.save
-            render :edit
-          end
+        if params[:apply_registrations_trainee_data_form][:mark_as_reviewed] == "1"
+          @trainee_data_form = ::ApplyRegistrations::TraineeDataForm.new(trainee: @trainee)
+          render :edit unless @trainee_data_form.save
         end
+
         redirect_to trainee_path(trainee)
       end
 

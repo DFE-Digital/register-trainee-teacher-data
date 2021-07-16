@@ -6,7 +6,7 @@ module TaskListHelper
       publish_course_details:
         {
           task_name: "Course details",
-          path: edit_trainee_publish_course_details_path(trainee),
+          path: (trainee.apply_application? ? trainee_apply_registrations_course_details_path(trainee) : edit_trainee_publish_course_details_path(trainee)),
           confirm_path: (trainee.apply_application? ? trainee_apply_registrations_course_details_path(trainee) : trainee_course_details_confirm_path(trainee)),
           classes: "course-details",
           status: ProgressService.call(
@@ -18,8 +18,8 @@ module TaskListHelper
       course_details:
         {
           task_name: "Course details",
-          path: edit_trainee_course_details_path(trainee),
-          confirm_path: trainee_course_details_confirm_path(trainee),
+          path: (trainee.apply_application? ? trainee_apply_registrations_course_details_path(trainee) : edit_trainee_course_details_path(trainee)),
+          confirm_path: (trainee.apply_application? ? trainee_apply_registrations_course_details_path(trainee) : trainee_course_details_confirm_path(trainee)),
           classes: "course-details",
           status: ProgressService.call(
             validator: CourseDetailsForm.new(trainee),

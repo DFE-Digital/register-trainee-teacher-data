@@ -3,6 +3,40 @@
 require "faker"
 require "factory_bot"
 require Rails.root.join("spec/support/api_stubs/apply_api")
+require Rails.root.join("spec/support/publish_courses_with_subjects")
+
+REAL_PUBLISH_COURSES_WITH_SUBJECTS = {
+  "Primary" => ["Primary"],
+  "Art and design" => ["Art and design"],
+  "Biology" => ["Biology"],
+  "Chemistry" => ["Chemistry"],
+  "Computing" => ["Computing"],
+  "Design and Technology" => ["Design and technology"],
+  "English" => ["English"],
+  "Geography" => ["Geography"],
+  "History" => ["History"],
+  "Mathematics" => ["Mathematics"],
+  "Modern Languages" => ["Modern languages (other)"],
+  "Music" => ["Music"],
+  "Physical Education" => ["Physical education"],
+  "Physics" => ["Physics"],
+  "Primary with Mathematics" => ["Primary with mathematics"],
+  "Religious Education" => ["Religious education"],
+  "Art and Design" => ["Art and design"],
+  "Business Studies" => ["Business studies"],
+  "Drama" => ["Drama"],
+  "Health and Social Care" => ["Health and social care"],
+  "Modern languages" => ["Modern languages (other)"],
+  "PE with EBacc" => ["Physical education"],
+  "Primary (SEND)" => ["Primary"],
+  "Psychology" => ["Psychology"],
+  "Religious education" => ["Religious education"],
+  "Social Sciences" => ["Social sciences"],
+  "Modern Languages (French and Spanish)" => %w[French Spanish],
+  "Computer Science" => ["Computing"],
+  "Design and technology" => ["Design and technology"],
+  "Modern Languages (Spanish)" => ["Spanish"],
+}.freeze
 
 namespace :example_data do
   desc "Create personas, their providers and a selection of trainees"
@@ -22,7 +56,7 @@ namespace :example_data do
     lead_schools = FactoryBot.create_list(:school, 50, lead_school: true)
 
     # Create some subjects
-    subjects = FactoryBot.create_list(:subject, 20)
+    REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name: name) }
 
     # For each persona...
     PERSONAS.each do |persona_attributes|
@@ -41,17 +75,19 @@ namespace :example_data do
         dttp_id: SecureRandom.uuid,
         code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       )
+
       persona.update!(provider: provider)
 
-      courses = nil
       # For each of the course routes enabled...
       enabled_course_routes.each do |route|
-        # Create some courses for that provider with some subjects
-        courses = FactoryBot.build_list(:course, rand(10..70), accredited_body_code: provider.code, route: route) do |course|
-          course.subjects = subjects.sample(rand(1..3))
+        REAL_PUBLISH_COURSES_WITH_SUBJECTS.each do |course_name, subject_names|
+          FactoryBot.build(:course, accredited_body_code: provider.code, route: route, name: course_name) { |course|
+            course.subjects = Subject.where(name: subject_names)
+          }.save!
         end
-        courses.each(&:save!)
       end
+
+      provider_course_codes = provider.courses.pluck(:code)
 
       # For each route that's enabled...
       enabled_routes.each do |route|
@@ -67,15 +103,12 @@ namespace :example_data do
             # Some route-specific logic, but could move into factories too
             attrs.merge!(lead_school: lead_schools.sample) if %i[school_direct_salaried school_direct_tuition_fee].include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if route == :school_direct_salaried
-            attrs.merge!(course_code: courses.sample.code) unless state == :draft
+            attrs.merge!(course_code: provider_course_codes.sample) unless state == :draft
 
             # Make *roughly* half of draft trainees apply drafts
             if state == :draft && sample_index < sample_size / 2
-              attrs.merge!(
-                FactoryBot.attributes_for(:trainee, :with_course_details, course_code: nil)
-                  .slice(:course_subject_one, :course_code, :course_age_range, :course_start_date, :course_end_date),
-                apply_application: FactoryBot.create(:apply_application, provider: provider),
-              )
+              attrs.merge!(course_code: provider_course_codes.sample,
+                           apply_application: FactoryBot.create(:apply_application, provider: provider))
             end
 
             trainee = FactoryBot.create(:trainee, route, state, attrs)

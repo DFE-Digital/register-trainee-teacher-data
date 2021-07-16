@@ -27,7 +27,7 @@ module ApplyRegistrations
           {
             key: summary_title,
             value: course_details,
-            action: govuk_link_to(t(".change_course"), edit_trainee_publish_course_details_path(@trainee, context: :apply)),
+            action: govuk_link_to(t(".change_course"), edit_trainee_publish_course_details_path(@trainee)),
           },
           { key: t(".route"), value: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}") },
           { key: subject_key, value: subject_names },

@@ -36,10 +36,6 @@ module Trainees
         email: contact_details["email"],
         training_route: course.route,
         course_code: course.code,
-        course_min_age: course.min_age,
-        course_max_age: course.max_age,
-        course_start_date: course.start_date,
-        course_end_date: course.end_date,
       }
     end
 
@@ -102,27 +98,6 @@ module Trainees
 
       it "adds the trainee's nationalities" do
         expect(trainee.nationalities.map(&:name)).to match_array(%w[british tristanian])
-      end
-    end
-
-    context "course subject has multiple specialisms" do
-      let(:subject_names) do
-        [PUBLISH_SUBJECT_SPECIALISM_MAPPING.select { |_, specialisms| specialisms.size > 1 }.keys.sample]
-      end
-
-      it "doesn't set any of the course subject one attribute" do
-        expect(trainee.course_subject_one).to be_nil
-      end
-    end
-
-    context "course subject has one specialism" do
-      let(:subject_names) { [subject_name] }
-      let(:subject_name) do
-        PUBLISH_SUBJECT_SPECIALISM_MAPPING.select { |_, specialisms| specialisms.size == 1 }.keys.sample
-      end
-
-      it "doesn't set any of the course subject one attribute" do
-        expect(trainee.course_subject_one).to eq(PUBLISH_SUBJECT_SPECIALISM_MAPPING[subject_name].first)
       end
     end
   end

@@ -205,8 +205,8 @@ class Trainee < ApplicationRecord
     self.course_min_age, self.course_max_age = range
   end
 
-  def subjects
-    [subject, subject_two, subject_three].reject(&:blank?)
+  def course_subjects
+    [course_subject_one, course_subject_two, course_subject_three].reject(&:blank?)
   end
 
   def route_data_manager

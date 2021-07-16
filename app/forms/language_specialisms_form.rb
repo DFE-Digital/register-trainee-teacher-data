@@ -21,14 +21,6 @@ class LanguageSpecialismsForm < TraineeForm
 
 private
 
-  def update_trainee_attributes
-    trainee.assign_attributes({
-      course_subject_one: languages.first,
-      course_subject_two: languages.second,
-      course_subject_three: languages.third,
-    })
-  end
-
   def compute_fields
     {
       language_specialisms: [

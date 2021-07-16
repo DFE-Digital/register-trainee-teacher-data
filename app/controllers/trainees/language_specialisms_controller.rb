@@ -22,7 +22,7 @@ module Trainees
   private
 
     def next_step_path
-      if publish_course_details_form.for_apply_registration?
+      if trainee.apply_application?
         trainee_apply_registrations_confirm_courses_path(trainee)
       else
         edit_trainee_confirm_publish_course_path(trainee_id: trainee.slug)
@@ -34,7 +34,7 @@ module Trainees
     end
 
     def course
-      trainee.available_courses.find_by_code!(publish_course_details_form.code)
+      trainee.available_courses.find_by_code!(course_code)
     end
 
     def load_language_specialisms
@@ -51,6 +51,10 @@ module Trainees
 
     def publish_course_details_form
       @publish_course_details_form ||= PublishCourseDetailsForm.new(trainee)
+    end
+
+    def course_code
+      publish_course_details_form.code || trainee.course_code
     end
   end
 end

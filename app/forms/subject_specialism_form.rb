@@ -33,12 +33,6 @@ class SubjectSpecialismForm < TraineeForm
 
 private
 
-  def update_trainee_attributes
-    (1..3).each do |i|
-      trainee.send("#{subject_attribute(i)}=", fields[:"specialism#{i}"])
-    end
-  end
-
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
   end
@@ -66,9 +60,5 @@ private
     if @position && send(specialism_attribute).blank?
       errors.add(specialism_attribute, I18n.t(ERROR_TRANSLATION_KEY))
     end
-  end
-
-  def form_store_key
-    :subject_specialism
   end
 end

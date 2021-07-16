@@ -8,7 +8,9 @@ module Trainees
       helper_method :subject_specialism_path
 
       def show
-        redirect_to trainee_apply_registrations_confirm_courses_path(trainee) if trainee.course_subject_one
+        if trainee.course_subjects.any? || course_has_one_specialism?
+          redirect_to trainee_apply_registrations_confirm_courses_path(trainee)
+        end
       end
 
     private
