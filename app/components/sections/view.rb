@@ -12,19 +12,36 @@ module Sections
 
     def component
       if display_type == :expanded
-        confirmation_view_args = { data_model: form_klass.new(trainee) }
-
-        if section == :degrees
-          confirmation_view_args.merge!(show_add_another_degree_button: false, show_delete_button: true)
-        end
-
         confirmation_view.new(**confirmation_view_args)
       else
-        CollapsedSection::View.new(title: title, link_text: link_text, url: url, error: error)
+        CollapsedSection::View.new(**collapsed_section_args)
       end
     end
 
   private
+
+    delegate :funding_options, to: :helpers
+
+    def confirmation_view_args
+      confirmation_view_args = { data_model: form_klass.new(trainee) }
+
+      if section == :degrees
+        confirmation_view_args.merge!(show_add_another_degree_button: false, show_delete_button: true)
+      end
+      confirmation_view_args
+    end
+
+    def collapsed_funding_inactive_section_args
+      { title: I18n.t("components.sections.titles.funding_inactive"), hint_text: I18n.t("components.sections.link_texts.funding_inactive"), error: error }
+    end
+
+    def collapsed_section_args
+      if section == :funding && funding_options(trainee) == :funding_inactive
+        collapsed_funding_inactive_section_args
+      else
+        { title: title, link_text: link_text, url: url, error: error }
+      end
+    end
 
     def form_klass
       case section

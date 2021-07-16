@@ -297,12 +297,14 @@ en:
         lead_school: School details
         schools: Schools
         funding: Funding
+        funding_inactive: Funding cannot be started yet
       statuses:
         not_started: not started
         in_progress: not marked as complete
       link_texts:
         not_started: Start section
         in_progress: Continue section
+        funding_inactive:  Complete course details first
     school_result_notice:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
