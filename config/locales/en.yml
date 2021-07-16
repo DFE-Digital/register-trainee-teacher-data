@@ -8,7 +8,7 @@ en:
   continue: Continue
   update_record: Update record
   return_home: Return home
-  mark_as_completed: I have completed this section
+  mark_as_completed: I have %{action} this section
   mark_as_reviewed: I have reviewed the trainee data
   education: Education
   personal_details: Personal details

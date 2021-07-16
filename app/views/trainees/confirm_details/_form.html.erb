@@ -7,7 +7,7 @@
     <%= register_form_with(model: confirm_detail_form, url: resource_confirm_update_path, method: :put, local: true) do |f| %>
       <% if @trainee.draft? %>
         <%= f.govuk_check_boxes_fieldset :mark_as_completed, multiple: false, legend: { text: "" } do %>
-          <%= f.govuk_check_box :mark_as_completed, 1, 0, multiple: false, link_errors: true, label: { text: t("mark_as_completed") } %>
+          <%= f.govuk_check_box :mark_as_completed, 1, 0, multiple: false, link_errors: true, label: { text: @checkbox_text } %>
         <% end %>
       <% end %>
       <%= f.govuk_submit trainee.draft? ? t(:continue) : t(:update_record) %>

@@ -12,6 +12,7 @@ module Trainees
 
       if trainee.draft?
         @confirm_detail_form = ConfirmDetailForm.new(mark_as_completed: trainee.progress.public_send(trainee_section_key))
+        @checkbox_text = course_details_checkbox_text
       end
 
       @confirmation_component = component_klass.new(data_model: trainee.draft? ? trainee : form_klass.new(trainee))
@@ -65,6 +66,10 @@ module Trainees
         "components.confirmation.flash.#{trainee_section_key}",
         default: confirm_section_title.pluralize,
       )
+    end
+
+    def course_details_checkbox_text
+      trainee.apply_application? && trainee_section_key == "course_details" ? t("mark_as_completed", action: "reviewed") : t("mark_as_completed", action: "completed")
     end
 
     def toggle_trainee_progress_field
