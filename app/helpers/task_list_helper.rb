@@ -70,7 +70,10 @@ module TaskListHelper
           path: edit_trainee_apply_trainee_data_path(trainee),
           confirm_path: edit_trainee_apply_trainee_data_path(trainee),
           classes: "trainee-data",
-          status: "review",
+          status: ProgressService.call(
+            validator: ApplyTraineeDataForm.new(trainee),
+            progress_value: ApplyTraineeDataForm.new(trainee).progress,
+          ).status,
         },
 
       personal_details:

@@ -32,6 +32,8 @@ module Sections
         Schools::FormValidator
       when :funding
         Funding::FormValidator
+      # when :trainee_data
+      #   ApplyTraineeDataForm
       else
         "#{section.to_s.camelcase}Form".constantize
       end
@@ -47,6 +49,7 @@ module Sections
         training_details: TrainingDetails::View,
         schools: Schools::View,
         funding: Funding::View,
+        trainee_data: ReviewDraft::ApplyDraft::View,
       }[section]
     end
 
@@ -55,34 +58,47 @@ module Sections
         personal_details: {
           not_started: "edit_trainee_personal_details_path",
           in_progress: "trainee_personal_details_confirm_path",
+          review: "trainee_personal_details_confirm_path",
         },
         contact_details: {
           not_started: "edit_trainee_contact_details_path",
           in_progress: "trainee_contact_details_confirm_path",
+          review: "trainee_contact_details_confirm_path",
         },
         diversity: {
           not_started: "edit_trainee_diversity_disclosure_path",
           in_progress: "trainee_diversity_confirm_path",
+          review: "trainee_diversity_confirm_path",
         },
         degrees: {
           not_started: "trainee_degrees_new_type_path",
           in_progress: "trainee_degrees_confirm_path",
+          review: "trainee_degrees_confirm_path",
         },
         course_details: {
           not_started: "edit_trainee_course_details_path",
           in_progress: "trainee_course_details_confirm_path",
+          review: "trainee_course_details_confirm_path",
         },
         training_details: {
           not_started: "edit_trainee_training_details_path",
           in_progress: "trainee_training_details_confirm_path",
+          review: "trainee_training_details_confirm_path",
         },
         schools: {
           not_started: "edit_trainee_lead_schools_path",
           in_progress: "trainee_schools_confirm_path",
+          review: "trainee_schools_confirm_path",
         },
         funding: {
           not_started: "edit_trainee_funding_training_initiative_path",
           in_progress: "trainee_funding_confirm_path",
+          review: "trainee_funding_confirm_path",
+        },
+        trainee_data: {
+          not_started: "edit_trainee_apply_trainee_data_path",
+          in_progress: "edit_trainee_apply_trainee_data_path",
+          review: "edit_trainee_apply_trainee_data_path",
         },
       }[section][progress_status]
     end

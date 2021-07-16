@@ -41,32 +41,10 @@
       </div>
     </div>
 
-    <h2 class="govuk-heading-m">
-      Personal details and education
-    </h2>
-
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :personal_details) %>
-
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :contact_details) %>
-
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :diversity) %>
-
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :degrees) %>
-
-    <h2 class="govuk-heading-m">
-      About their teacher training
-    </h2>
-
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :course_details) %>
-
-    <%= render Sections::View.new(trainee: @trainee, form: @form, section: :training_details) %>
-
-    <% if @trainee.requires_schools? %>
-      <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools) %>
-    <% end %>
-
-    <% if FeatureService.enabled?(:show_funding) %>
-      <%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding) %>
+    <% if @trainee.apply_application? %>
+      <%= render "trainees/check_details/apply_draft_trainee_check_details" %>
+    <% else %>
+      <%= render "trainees/check_details/draft_trainee_check_details" %>
     <% end %>
 
     <%= register_form_with(model: @form, url: trn_submissions_path, method: :post, local: true) do |f| %>

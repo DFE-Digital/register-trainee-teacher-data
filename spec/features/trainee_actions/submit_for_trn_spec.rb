@@ -46,6 +46,18 @@ feature "submit for TRN" do
     end
   end
 
+  describe "content" do
+    let(:trainee) { create(:trainee, :with_apply_application, provider: current_user.provider) }
+
+    context "with an apply-draft-trainee" do
+      scenario "has a trainee data section" do
+        given_an_apply_draft_trainee_exists
+        and_i_am_on_the_check_details_page
+        theres_a_trainee_data_section
+      end
+    end
+  end
+
   describe "navigation" do
     context "clicking back to draft record" do
       scenario "returns the user to the summary page" do
@@ -64,6 +76,14 @@ feature "submit for TRN" do
         then_i_am_redirected_to_the_trainee_records_page
       end
     end
+  end
+
+  def given_an_apply_draft_trainee_exists
+    trainee
+  end
+
+  def theres_a_trainee_data_section
+    expect(review_draft_page).to have_text("Trainee data")
   end
 
   def when_i_am_viewing_the_review_draft_page

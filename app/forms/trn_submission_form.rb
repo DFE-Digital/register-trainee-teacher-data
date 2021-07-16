@@ -11,16 +11,18 @@ class TrnSubmissionForm
     end
   end
 
-  trn_validator :personal_details, form: "PersonalDetailsForm"
-  trn_validator :contact_details, form: "ContactDetailsForm"
-  trn_validator :diversity, form: "Diversities::FormValidator"
-  trn_validator :degrees, form: "DegreesForm"
+  trn_validator :personal_details, form: "PersonalDetailsForm", unless: :apply_application?
+  trn_validator :contact_details, form: "ContactDetailsForm", unless: :apply_application?
+  trn_validator :diversity, form: "Diversities::FormValidator", unless: :apply_application?
+  trn_validator :degrees, form: "DegreesForm", unless: :apply_application?
   trn_validator :course_details, form: "CourseDetailsForm"
   trn_validator :training_details, form: "TrainingDetailsForm"
+  trn_validator :trainee_data, form: "ApplyTraineeDataForm", if: :apply_application?
   trn_validator :schools, form: "Schools::FormValidator", if: :requires_schools?
   trn_validator :funding, form: "Funding::FormValidator", if: :funding_details_collected?
 
   delegate :requires_schools?, to: :trainee
+  delegate :apply_application?, to: :trainee
 
   validate :submission_ready
 
