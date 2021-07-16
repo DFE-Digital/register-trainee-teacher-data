@@ -312,6 +312,7 @@ en:
           titles:
             tuition: Lead school
             salaried: Schools
+            pg_teaching_apprenticeship: Schools
   views:
     all_records: All records
     trainees:
@@ -428,6 +429,7 @@ en:
           provider_led_postgrad: provider-led postgrad
           school_direct_salaried: school direct salaried
           school_direct_tuition_fee: school direct tuition fee
+          pg_teaching_apprenticeship: teaching apprenticeship postgrad
       funding:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
@@ -632,6 +634,7 @@ en:
           provider_led_postgrad: Provider-led (postgrad)
           school_direct_salaried: School direct (salaried)
           school_direct_tuition_fee: School direct (tuition fee)
+          pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
         states:
           draft: Draft
           submitted_for_trn: Pending TRN

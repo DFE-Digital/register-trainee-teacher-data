@@ -23,7 +23,7 @@ module Dttp
       let(:placement_request_url) { "#{Settings.dttp.api_base_url}#{placement_path}" }
 
       before do
-        enable_features(:persist_to_dttp, "routes.school_direct_salaried", :show_funding, :send_funding_to_dttp)
+        enable_features(:persist_to_dttp, "routes.school_direct_salaried", "routes.school_direct_tuition_fee", "routes.pg_teaching_apprenticeship", :show_funding, :send_funding_to_dttp)
         allow(AccessToken).to receive(:fetch).and_return("token")
         stub_request(:patch, contact_request_url).to_return(contact_response)
         stub_request(:patch, placement_request_url).to_return(placement_response)

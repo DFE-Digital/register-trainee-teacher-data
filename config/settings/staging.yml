@@ -22,6 +22,7 @@ features:
     provider_led_postgrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
+    pg_teaching_apprenticeship: true
 
 environment:
   name: staging

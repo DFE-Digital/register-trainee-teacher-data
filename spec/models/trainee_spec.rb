@@ -16,6 +16,7 @@ describe Trainee do
         TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
+        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
       )
     end
 

@@ -153,10 +153,12 @@ private
   def school_details_title(route)
     tuition_title = I18n.t("components.review_draft.draft.schools.titles.tuition")
     salaried_title = I18n.t("components.review_draft.draft.schools.titles.salaried")
+    pg_teaching_apprenticeship_title = I18n.t("components.review_draft.draft.schools.titles.pg_teaching_apprenticeship")
 
     {
       school_direct_tuition_fee: tuition_title,
       school_direct_salaried: salaried_title,
-    }[route.to_sym || salaried_title]
+      pg_teaching_apprenticeship: pg_teaching_apprenticeship_title,
+    }[route.to_sym]
   end
 end
