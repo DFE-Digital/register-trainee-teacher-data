@@ -528,6 +528,8 @@ en:
       heading_1_name: "Draft record for %{name}"
       heading_1_no_name: "Draft record"
       heading_2: "Trainee Data"
+      invalid_answers_summary: "This application contains %{total_invalid_fields} answer that you need to amend. This is because they were entered in a free text format."
+      invalid_answer_text: "%{invalid_field} is not recognised"
   route_indicator:
     view:
       display_text: "Trainee on the %{training_route_link} route."

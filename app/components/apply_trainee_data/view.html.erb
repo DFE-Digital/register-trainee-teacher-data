@@ -19,6 +19,17 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <%= render GovukComponent::NotificationBanner.new(title: 'Information', disable_auto_focus: true) do %>
+          <p class="govuk-body"><%= t(".invalid_answers_summary", total_invalid_fields: 1) %></p>
+
+          <ul class="govuk-list app-invalid-answer__list">
+            <% { institution: "invalid_data" }.keys.each do |key| %>
+              <li><%= link_to(t(".invalid_answer_text", invalid_field: key.to_s.upcase_first), "##{key}", class: "govuk-notification-banner__link") %></li>
+            <% end %>          
+          </ul>
+        <% end %>   
+
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
             <% if trainee_name(@trainee).present? %>
@@ -29,8 +40,6 @@
           </span>
           <%= t(".heading_2") %>
         </h1>
-
-        <%= render RouteIndicator::View.new(trainee: @trainee) %>
       </div>
     </div>
 

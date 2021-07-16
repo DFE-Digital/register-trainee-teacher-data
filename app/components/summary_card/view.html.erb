@@ -18,7 +18,8 @@
              key: row[:key],
              value: row[:value],
              action: row[:action],
-             classes: row[:key].to_s.downcase.gsub(/ /, "-"),
+             html_attributes: { id: row_title(row[:key]) },
+             classes: row_title(row[:key]),
            ) %>
       <% end %>
     <% end %>
